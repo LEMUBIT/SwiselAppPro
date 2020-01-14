@@ -16,8 +16,10 @@
         <activity
             android:name=".ui.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".MainActivity">
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".MainActivity"
+            android:label="MyAppMan"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

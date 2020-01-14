@@ -17,9 +17,14 @@
             android:icon="@drawable/ic_nigerian_naira_24"
             android:title="@string/transactions" />
         <item
-            android:id="@+id/nav_tools"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_tools" />
+            android:id="@+id/nav_result"
+            android:icon="@drawable/ic_checklist_menu"
+            android:title="My Result" />
+
+        <item
+            android:id="@+id/nav_notification"
+            android:icon="@drawable/ic_notifications_active_black_24dp"
+            android:title="Notifications" />
     </group>
 
     <item android:title="Communicate">

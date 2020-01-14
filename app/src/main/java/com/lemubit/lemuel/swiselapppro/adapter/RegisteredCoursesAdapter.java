@@ -31,9 +31,9 @@ public class RegisteredCoursesAdapter extends RecyclerView.Adapter<RegisteredCou
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Data[] data = mRegisteredCoursesModel.getData();
-        holder.txtCourseTitle.setText("Course Title: " + data[position].getTitle());
+        holder.txtCourseTitle.setText("Course: " + data[position].getTitle());
         holder.txtCourseCode.setText("Code: " + data[position].getCode());
-        holder.txtCourseCredit.setText("Credit Load: " + data[position].getCredit());
+        holder.txtCourseCredit.setText("CL: " + data[position].getCredit());
         holder.txtCurrentSemester.setText(getSemester(data[position].getSemester()));
         holder.txtCourseLevel.setText("Level: " + getLevel(data[position].getLevel()));
 
@@ -46,9 +46,9 @@ public class RegisteredCoursesAdapter extends RecyclerView.Adapter<RegisteredCou
 
     private String getSemester(String number) {
         if (number.equals("1")) {
-            return "First Semester";
+            return "S1";
         } else {
-            return "Second Semester";
+            return "S2";
         }
     }
 

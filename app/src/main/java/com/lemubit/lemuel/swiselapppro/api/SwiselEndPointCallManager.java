@@ -1,5 +1,7 @@
 package com.lemubit.lemuel.swiselapppro.api;
 
+import com.lemubit.lemuel.swiselapppro.model.NoticeModel;
+import com.lemubit.lemuel.swiselapppro.model.result.ResultModel;
 import com.lemubit.lemuel.swiselapppro.model.transactions.TransactionsModel;
 import com.lemubit.lemuel.swiselapppro.model.registeredcourses.RegisteredCoursesModel;
 import com.lemubit.lemuel.swiselapppro.model.currentsession.CurrentSessionModel;
@@ -93,6 +95,39 @@ public class SwiselEndPointCallManager {
         });
     }
 
+    public static void getRegisteredCoursesResults(String id, String session, OnGetRegisteredResultsListener onGetRegisteredResultsListener) {
+        Call<ResultModel> resultModelCall = swiselAppEndPoints.getRegisteredResults(Headers.contentType(), id, session);
+
+        resultModelCall.enqueue(new Callback<ResultModel>() {
+            @Override
+            public void onResponse(Call<ResultModel> call, Response<ResultModel> response) {
+                onGetRegisteredResultsListener.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResultModel> call, Throwable t) {
+                onGetRegisteredResultsListener.onFailure(t.getMessage());
+            }
+        });
+    }
+
+    public static void getNotifications(String department, String faculty, OnGetNoticesListener onGetNoticesListener) {
+        Call<NoticeModel> noticeModelCall = swiselAppEndPoints.getNotifications(Headers.contentType(), department, faculty);
+
+        noticeModelCall.enqueue(new Callback<NoticeModel>() {
+            @Override
+            public void onResponse(Call<NoticeModel> call, Response<NoticeModel> response) {
+                onGetNoticesListener.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<NoticeModel> call, Throwable t) {
+                onGetNoticesListener.onFailure(t.getMessage());
+            }
+        });
+
+    }
+
 
     public interface OnLoginStudentListener {
         void onSuccess(LoginModel loginModel);
@@ -124,5 +159,16 @@ public class SwiselEndPointCallManager {
         void onFailure(String errorMessage);
     }
 
+    public interface OnGetRegisteredResultsListener {
+        void onSuccess(ResultModel resultModel);
+
+        void onFailure(String errorMessage);
+    }
+
+    public interface OnGetNoticesListener {
+        void onSuccess(NoticeModel noticeModel);
+
+        void onFailure(String errorMessage);
+    }
 
 }

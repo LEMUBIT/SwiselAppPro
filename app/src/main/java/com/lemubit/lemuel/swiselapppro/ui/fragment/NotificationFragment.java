@@ -13,45 +13,47 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lemubit.lemuel.swiselapppro.R;
-import com.lemubit.lemuel.swiselapppro.adapter.RegisteredCoursesAdapter;
-import com.lemubit.lemuel.swiselapppro.model.registeredcourses.RegisteredCoursesModel;
+import com.lemubit.lemuel.swiselapppro.adapter.NotificationAdapter;
+import com.lemubit.lemuel.swiselapppro.model.NoticeModel;
 
+import org.parceler.Parcel;
 import org.parceler.Parcels;
 
-public class RegisteredCoursesFragment extends Fragment {
-    RegisteredCoursesModel mRegisteredCoursesModel;
+public class NotificationFragment extends Fragment {
+    NoticeModel noticeModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRegisteredCoursesModel = Parcels.unwrap(getArguments().getParcelable("registeredCourseModel"));
+        noticeModel= Parcels.unwrap(getArguments().getParcelable("notices"));
     }
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_student_registered_courses, container, false);
+        return inflater.inflate(R.layout.fragment_notifications,container,false);
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView recyclerView = view.findViewById(R.id.rcv_registered_courses);
-        RegisteredCoursesAdapter registeredCoursesAdapter = new RegisteredCoursesAdapter(mRegisteredCoursesModel);
-        recyclerView.setAdapter(registeredCoursesAdapter);
+
+        RecyclerView recyclerView = view.findViewById(R.id.rcv_notifications);
+        NotificationAdapter notificationAdapter = new NotificationAdapter(noticeModel);
+        recyclerView.setAdapter(notificationAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         RecyclerView.ItemDecoration itemDecoration = new
                 DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
-
     }
 
-    public static RegisteredCoursesFragment newInstance(RegisteredCoursesModel registeredCoursesModel) {
-        RegisteredCoursesFragment registeredCourses = new RegisteredCoursesFragment();
+    public static NotificationFragment newInstance(NoticeModel noticeModel) {
+        NotificationFragment notificationFragment = new NotificationFragment();
         Bundle args = new Bundle();
-        args.putParcelable("registeredCourseModel", Parcels.wrap(registeredCoursesModel));
-        registeredCourses.setArguments(args);
-        return registeredCourses;
+        args.putParcelable("notices", Parcels.wrap(noticeModel));
+        notificationFragment.setArguments(args);
+        return notificationFragment;
+
     }
 }

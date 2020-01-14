@@ -13,11 +13,15 @@ import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 import com.lemubit.lemuel.swiselapppro.R;
 import com.lemubit.lemuel.swiselapppro.api.SwiselEndPointCallManager;
+import com.lemubit.lemuel.swiselapppro.model.NoticeModel;
+import com.lemubit.lemuel.swiselapppro.model.result.ResultModel;
 import com.lemubit.lemuel.swiselapppro.model.transactions.TransactionsModel;
 import com.lemubit.lemuel.swiselapppro.model.registeredcourses.RegisteredCoursesModel;
 import com.lemubit.lemuel.swiselapppro.model.currentsession.CurrentSessionModel;
 import com.lemubit.lemuel.swiselapppro.model.login.LoginModel;
+import com.lemubit.lemuel.swiselapppro.ui.fragment.NotificationFragment;
 import com.lemubit.lemuel.swiselapppro.ui.fragment.RegisteredCoursesFragment;
+import com.lemubit.lemuel.swiselapppro.ui.fragment.RegisteredCoursesResultsFragment;
 import com.lemubit.lemuel.swiselapppro.ui.fragment.StudentHomeProfileFragment;
 import com.lemubit.lemuel.swiselapppro.ui.fragment.TransactionsFragment;
 
@@ -161,9 +165,43 @@ public class HomeActivity extends AppCompatActivity
                 }
             });
 
-        } else if (id == R.id.nav_tools) {
+        } else if (id == R.id.nav_result) {
+            SwiselEndPointCallManager.getRegisteredCoursesResults(loginModel.getData().getId(), currentSessionModel.getData().getId(), new SwiselEndPointCallManager.OnGetRegisteredResultsListener() {
+                @Override
+                public void onSuccess(ResultModel resultModel) {
+                    RegisteredCoursesResultsFragment resultsFragment = RegisteredCoursesResultsFragment.newInstance(resultModel);
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.swisel_home_placeholder, resultsFragment);
+                    ft.commit();
+                }
 
-        } else if (id == R.id.nav_share) {
+                @Override
+                public void onFailure(String errorMessage) {
+                    Toast.makeText(HomeActivity.this, "Unable to get info", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+
+        else if(id==R.id.nav_notification)
+        {
+            SwiselEndPointCallManager.getNotifications(loginModel.getData().getDepartment(), loginModel.getData().getFaculty(), new SwiselEndPointCallManager.OnGetNoticesListener() {
+                @Override
+                public void onSuccess(NoticeModel noticeModel) {
+                    NotificationFragment notificationFragment = NotificationFragment.newInstance(noticeModel);
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.swisel_home_placeholder, notificationFragment);
+                    ft.commit();
+                }
+
+                @Override
+                public void onFailure(String errorMessage) {
+                    Toast.makeText(HomeActivity.this, "Unable to get notices"+errorMessage, Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }
+        else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 
